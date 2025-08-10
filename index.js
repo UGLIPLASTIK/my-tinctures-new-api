@@ -1,14 +1,14 @@
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const { createClient } = require('@supabase/supabase-js');
-const fetch = require('node-fetch');
+import express, { json } from 'express';
+import cors from 'cors';
+import { config } from 'dotenv';
+import { createClient } from '@supabase/supabase-js';
+import fetch from 'node-fetch';
 
-dotenv.config();
+config();
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
