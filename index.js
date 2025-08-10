@@ -15,10 +15,13 @@ const supabase = createClient(
 );
 
 app.post('/items', async (req, res) => {
-  const { name, sector, actual_quantity, recommended, compound } = req.body;
+  const { name, sector, actual_quantity, recommended_quantity, compound } =
+    req.body;
   const { data, error } = await supabase
     .from('tinctures')
-    .insert([{ name, sector, actual_quantity, recommended, compound }]);
+    .insert([
+      { name, sector, actual_quantity, recommended_quantity, compound },
+    ]);
 
   if (error) return res.status(400).json(error);
   res.json(data);
@@ -32,10 +35,11 @@ app.get('/items', async (_, res) => {
 
 app.put('/items/:id', async (req, res) => {
   const { id } = req.params;
-  const { name, sector, actual_quantity, recommended, compound } = req.body;
+  const { name, sector, actual_quantity, recommended_quantity, compound } =
+    req.body;
   const { data, error } = await supabase
     .from('tinctures')
-    .update({ name, sector, actual_quantity, recommended, compound })
+    .update({ name, sector, actual_quantity, recommended_quantity, compound })
     .eq('id', id);
 
   if (error) return res.status(400).json(error);
