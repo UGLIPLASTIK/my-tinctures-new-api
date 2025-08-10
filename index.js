@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const { createClient } = require('@supabase/supabase-js');
+const fetch = require('node-fetch');
 
 dotenv.config();
 
@@ -32,6 +33,25 @@ app.get('/items', async (_, res) => {
   if (error) return res.status(400).json(error);
   res.json(data);
 });
+
+app.get('/ping', (_, res) => {
+  res.json({ status: 'ok', time: new Date().toISOString() });
+});
+
+const PING_INTERVAL = 3 * 60 * 1000; // 3 минуты
+const SELF_URL =
+  process.env.SELF_URL ||
+  'https://my-tinctures-new-api-production.up.railway.app/ping';
+
+setInterval(async () => {
+  try {
+    const res = await fetch(SELF_URL);
+    const text = await res.text();
+    console.log(`[PING] Status: ${res.status}, Response: ${text}`);
+  } catch (err) {
+    console.error('[PING] Error:', err.message);
+  }
+}, PING_INTERVAL);
 
 app.put('/items', async (req, res) => {
   const { id, name, sector, actual_quantity, recommended_quantity, compound } =
