@@ -17,7 +17,7 @@ const supabase = createClient(
 app.post('/items', async (req, res) => {
   const { name, sector, actual_quantity, recommended, compound } = req.body;
   const { data, error } = await supabase
-    .from('items')
+    .from('tinctures')
     .insert([{ name, sector, actual_quantity, recommended, compound }]);
 
   if (error) return res.status(400).json(error);
@@ -25,7 +25,7 @@ app.post('/items', async (req, res) => {
 });
 
 app.get('/items', async (_, res) => {
-  const { data, error } = await supabase.from('items').select('*');
+  const { data, error } = await supabase.from('tinctures').select('*');
   if (error) return res.status(400).json(error);
   res.json(data);
 });
@@ -34,7 +34,7 @@ app.put('/items/:id', async (req, res) => {
   const { id } = req.params;
   const { name, sector, actual_quantity, recommended, compound } = req.body;
   const { data, error } = await supabase
-    .from('items')
+    .from('tinctures')
     .update({ name, sector, actual_quantity, recommended, compound })
     .eq('id', id);
 
@@ -44,7 +44,10 @@ app.put('/items/:id', async (req, res) => {
 
 app.delete('/items/:id', async (req, res) => {
   const { id } = req.params;
-  const { data, error } = await supabase.from('items').delete().eq('id', id);
+  const { data, error } = await supabase
+    .from('tinctures')
+    .delete()
+    .eq('id', id);
   if (error) return res.status(400).json(error);
   res.json(data);
 });
