@@ -33,9 +33,8 @@ app.get('/items', async (_, res) => {
   res.json(data);
 });
 
-app.put('/items/:id', async (req, res) => {
-  const { id } = req.params;
-  const { name, sector, actual_quantity, recommended_quantity, compound } =
+app.put('/items', async (req, res) => {
+  const { id, name, sector, actual_quantity, recommended_quantity, compound } =
     req.body;
   const { data, error } = await supabase
     .from('tinctures')
@@ -46,8 +45,8 @@ app.put('/items/:id', async (req, res) => {
   res.json(data);
 });
 
-app.delete('/items/:id', async (req, res) => {
-  const { id } = req.params;
+app.delete('/items', async (req, res) => {
+  const { id } = req.body;
   const { data, error } = await supabase
     .from('tinctures')
     .delete()
