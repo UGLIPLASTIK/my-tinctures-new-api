@@ -2,7 +2,7 @@ import express, { json } from 'express';
 import cors from 'cors';
 import { config } from 'dotenv';
 import { createClient } from '@supabase/supabase-js';
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch';
 
 config();
 
@@ -38,20 +38,20 @@ app.get('/ping', (_, res) => {
   res.json({ status: 'ok', time: new Date().toISOString() });
 });
 
-const PING_INTERVAL = 3 * 60 * 1000; // 3 минуты
-const SELF_URL =
-  process.env.SELF_URL ||
-  'https://my-tinctures-new-api-production.up.railway.app/ping';
+// const PING_INTERVAL = 3 * 60 * 1000; // 3 минуты
+// const SELF_URL =
+//   process.env.SELF_URL ||
+//   'https://my-tinctures-new-api-production.up.railway.app/ping';
 
-setInterval(async () => {
-  try {
-    const res = await fetch(SELF_URL);
-    const text = await res.text();
-    console.log(`[PING] Status: ${res.status}, Response: ${text}`);
-  } catch (err) {
-    console.error('[PING] Error:', err.message);
-  }
-}, PING_INTERVAL);
+// setInterval(async () => {
+//   try {
+//     const res = await fetch(SELF_URL);
+//     const text = await res.text();
+//     console.log(`[PING] Status: ${res.status}, Response: ${text}`);
+//   } catch (err) {
+//     console.error('[PING] Error:', err.message);
+//   }
+// }, PING_INTERVAL);
 
 app.put('/items', async (req, res) => {
   const { id, name, sector, actual_quantity, recommended_quantity, compound } =
