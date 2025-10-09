@@ -74,6 +74,12 @@ app.delete('/items', async (req, res) => {
   res.json(data);
 });
 
+app.get('/periods', async (_, res) => {
+  const { data, error } = await supabase.from('periods').select('*');
+  if (error) return res.status(400).json(error);
+  res.json(data);
+});
+
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Server is running on port ${process.env.PORT || 3000}`);
 });
