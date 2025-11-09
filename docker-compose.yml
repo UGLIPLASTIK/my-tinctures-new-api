@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    container_name: my-tinctures-api
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
